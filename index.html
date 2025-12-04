@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Spur Support Email</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 30px;
+        background: #fafafa;
+        text-align: center;
+    }
+    h2 { margin-bottom: 20px; }
+    button {
+        padding: 16px 26px;
+        font-size: 18px;
+        background: #cc0000;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #b30000;
+    }
+</style>
+</head>
+<body>
+
+<h2>Send Spur Support Ticket</h2>
+<p>Tap the button below to open your email app.</p>
+
+<button id="smartEmailBtn">Send Spur Support Email</button>
+
+<script>
+(function() {
+  const to = 'spurcorp@picup.co.za';
+  const cc = 'jude@picup.co.za,bunna@picup.co.za,oliver@picup.co.za';
+  const subject = 'Spur Support - Ticket';
+  const body = `Dear Picup Support,
+
+Order: 
+
+Store: 
+
+Activation Time:
+
+Issue: 
+
+Kind regards,
+Spur Corporation`;
+
+  const enc = encodeURIComponent;
+  const mailto = `mailto:${to}?cc=${enc(cc)}&subject=${enc(subject)}&body=${enc(body)}`;
+  const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(to)}&cc=${enc(cc)}&su=${enc(subject)}&body=${enc(body)}`;
+  const gmailApp = `googlegmail://co?to=${enc(to)}&cc=${enc(cc)}&subject=${enc(subject)}&body=${enc(body)}`;
+
+  const FIRST_FALLBACK = 600;
+  const SECOND_FALLBACK = 700;
+
+  function tryOpen(url) {
+    window.location.href = url;
+  }
+
+  function openSmartly() {
+    tryOpen(gmailApp);
+
+    setTimeout(function() {
+      const win = window.open(gmailWeb, '_blank');
+
+      setTimeout(function() {
+        if (!win) {
+          window.location.href = mailto;
+        } else {
+          window.location.href = mailto;
+        }
+      }, SECOND_FALLBACK);
+    }, FIRST_FALLBACK);
+  }
+
+  document.getElementById('smartEmailBtn').addEventListener('click', openSmartly);
+})();
+</script>
+
+</body>
+</html>
